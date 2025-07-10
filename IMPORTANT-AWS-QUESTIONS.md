@@ -139,14 +139,9 @@ Ans:- (i)First check the pinging of the client system. If it is not pinging then
 16. How will you patch the servers 
 
 17. How many servers are there in your environment
-Ans:- there are 120 servers. 
 18. How many linux and windows servers are there
-Ans:- there are around 80 is linux and rest of them are windows
 19. How many environment are there
 Ans:- There are three environment
-1.	Lab/Dev Server: The development team develops and deploys to staging for testing.
-2.	Staging or Reference Server: The staging server is where we deploy our work for review before it goes to production. After successful testing in staging, we keep it idle for at least 10 days. If there are no errors, we deploy to the production server.
-3.	Production Server: The live server where customer-facing applications are deployed.
 20. What is the use of Elastic IP
 Ans:-  A elastic IP address is static IPv4  address designed for dynamic cloud computing.
 21. What is WAF
@@ -220,7 +215,6 @@ Ans:- SG:
 Ans:- Route Table define how traffic will route within the vpc or outside the the vpc.
          A route table contains a set of rules, called routes that are used to determine where network traffic is directed.
 
-32. **For which purpose you are using S3**
 Ans:- 1. Data Backup and Restore
 •	Storing backups of servers, databases, and applications.
 •	Disaster recovery planning.
@@ -278,6 +272,3 @@ Then inform to those users who execute the process
 If those users not present or responding then we have to change the priority of the process by the by the command renice
 renice -n 10 PID 
 41. How to troubleshoot if the memory utilization is full ?
-Ans:- i. First check which process and who execute that process id consuming more memory by the command #top
-ii.Try to kill or disable or stop the unnecessary services
-iii.If all these are not possible then we have to increase the memory
