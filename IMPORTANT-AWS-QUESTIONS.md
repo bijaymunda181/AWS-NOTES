@@ -131,7 +131,7 @@ This will work without internet access if the endpoint is set up correctly.
 Ans:- Amazon EFS (Elastic File System) is a fully managed, scalable, shared file storage service for use with Linux-based workloads in the AWS Cloud. It's a Network File System (NFS) that multiple EC2 instances can mount simultaneously.
 14. Your VM is not able to mount the EFS how to troubleshoot 
 15. You are not able to SSH into VM how to fix
-Ans:- (i)First check the pinging of the client system. If it is not pinging then check the IP address of the client system. If client system and sever system are in different domains or networks it will not ping. So, bring the client system into the network of the server system. Check the network is working or not and also check whether the network cable is connected or not.
+Ans:-(i)First check the pinging of the client system. If it is not pinging then check the IP address of the client system. If client system and sever system are in different domains or networks it will not ping. So, bring the client system into the network of the server system. Check the network is working or not and also check whether the network cable is connected or not.
 (ii)If both systems are pinging then check whether the openssh package is installed or not. If not installed then install that package and configure ssh on the client system and restart the sshd deamon.
 (iii)Check the client <IP address or hostname> in /etc/hosts.deny files. If there is an entry of the client system in this file, then remove that entry and restart the sshd deamon.
 (iv)	Finally open the ssh configuration file  by  # vim  /etc/ssh/sshd_config    and  see any client user name is present or not and check other lines for client entries in this file, if present remove those entries, save that file and restart the sshd service.
@@ -140,8 +140,12 @@ Ans:- (i)First check the pinging of the client system. If it is not pinging then
 
 17. How many servers are there in your environment
 18. How many linux and windows servers are there
+ANS:- There are around 80 servers are linux and the rest is window server. 
 19. How many environment are there
 Ans:- There are three environment
+    Lab/Dev Server: The development team develops and deploys to staging for testing.
+    Staging or Reference Server: The staging server is where we deploy our work for review before it goes to production. After successful testing in staging, we keep it idle for at least 10 days. If there are no errors, we deploy to the production server.
+    Production Server: The live server where customer-facing applications are deployed.
 20. What is the use of Elastic IP
 Ans:-  A elastic IP address is static IPv4  address designed for dynamic cloud computing.
 21. What is WAF
