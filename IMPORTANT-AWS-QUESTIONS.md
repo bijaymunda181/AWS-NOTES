@@ -44,6 +44,13 @@ Ans:-  To extend the disk partition we have to modify EBS volume size
 	
 7. How to configure backup 
 Ans:- we can configure backup from the AWS backup 
+1.	First we have to create vaults to store  the backup data 
+AWS Backup VaultsCreate new vault
+2.	Then we have to create a Backup Plan
+AWS BackupBackup PlansCreate Backup Plan
+•	Select Build a new plan
+•	Configure the Backup rule configuration
+•	 Then Assingn Resource
 8. Your VM is not booting how to troubleshoot 
 9. How 22 traff will come into your VM
 Ans:- You (MobaXterm)
@@ -65,7 +72,7 @@ Security Group (allows 22)
       │
       ▼
 EC2 Instance (sshd running)
-10. Difference between IGW AND NGW
+10. Difference between IGW AND NGW 
 Ans:- Internet Gateway vs NAT Gateway
 ________________________________________
 Internet Gateway (IGW)
@@ -130,8 +137,40 @@ This will work without internet access if the endpoint is set up correctly.
 13. What is the use case of EFS
 Ans:- Amazon EFS (Elastic File System) is a fully managed, scalable, shared file storage service for use with Linux-based workloads in the AWS Cloud. It's a Network File System (NFS) that multiple EC2 instances can mount simultaneously.
 14. Your VM is not able to mount the EFS how to troubleshoot 
+
+
 15. You are not able to SSH into VM how to fix
-Ans:-(i)First check the pinging of the client system. If it is not pinging then check the IP address of the client system. If client system and sever system are in different domains or networks it will not ping. So, bring the client system into the network of the server system. Check the network is working or not and also check whether the network cable is connected or not.
+Ans:-
+ Step 1: Ping the VM / Check Connectivity
+Check if the VM is reachable:
+ping <public-ip>
+Step 2: Check for SSHD Service is running or not
+Sometimes SSH daemon is not running check by the command
+Systemctl status sshd
+If it is not running start the service by the command 
+Systemctl start sshd
+Step 3: Check Security Group / Firewall Rules
+Ensure port 22 (SSH) is open.
+Netstat -lntp 
+Option	Meaning
+-l	Show only listening ports
+-n	Show numeric addresses (no DNS)
+-t	Show only TCP connections
+-p	Show the process ID and name
+Step 4: Check the user is present or not
+	Id <username>
+Step 5: Check the password is locked or not
+	Passwd -S <username> //check the password status
+	If the password is lock unlock the password by the command 
+	Passwd -u <username>
+Step 6: check the password is expiry or not
+	Chage -l <username>
+
+	
+
+
+Ans:- first we will check the network connection of the vm  
+Ans:- (i)First check the pinging of the client system. If it is not pinging then check the IP address of the client system. If client system and sever system are in different domains or networks it will not ping. So, bring the client system into the network of the server system. Check the network is working or not and also check whether the network cable is connected or not.
 (ii)If both systems are pinging then check whether the openssh package is installed or not. If not installed then install that package and configure ssh on the client system and restart the sshd deamon.
 (iii)Check the client <IP address or hostname> in /etc/hosts.deny files. If there is an entry of the client system in this file, then remove that entry and restart the sshd deamon.
 (iv)	Finally open the ssh configuration file  by  # vim  /etc/ssh/sshd_config    and  see any client user name is present or not and check other lines for client entries in this file, if present remove those entries, save that file and restart the sshd service.
@@ -139,16 +178,20 @@ Ans:-(i)First check the pinging of the client system. If it is not pinging then 
 16. How will you patch the servers 
 
 17. How many servers are there in your environment
+Ans:- there are 120 servers. 
 18. How many linux and windows servers are there
-ANS:- There are around 80 servers are linux and the rest is window server. 
+Ans:- there are arount 80 is linux and rest of them are windows
 19. How many environment are there
 Ans:- There are three environment
-    Lab/Dev Server: The development team develops and deploys to staging for testing.
-    Staging or Reference Server: The staging server is where we deploy our work for review before it goes to production. After successful testing in staging, we keep it idle for at least 10 days. If there are no errors, we deploy to the production server.
-    Production Server: The live server where customer-facing applications are deployed.
+1.	Prod
+2.	Non-prod
+3.	Testing
 20. What is the use of Elastic IP
 Ans:-  A elastic IP address is static IPv4  address designed for dynamic cloud computing.
+
 21. What is WAF
+Ans:- WAF stands for Web Application Firewall.
+It is a security system that monitors, filters, and blocks HTTP/HTTPS traffic to and from a web application.
 22. What is LB and how to setup
 Ans:- LB (Load Balancer) is a system that distributes incoming network traffic across multiple targets (like EC2 instances)
 Step 1️⃣: Create Target Group
@@ -181,7 +224,19 @@ Step 5️⃣: Test the Load Balancer
 •	You should see traffic being load balanced across registered EC2s.
 
 22. what is the difference between ALB and NLB
+Ans:- WE USE ALB When:
+•	Layer 7 (Application layer - HTTP/HTTPS)
+•	You need content-based routing (e.g., /api goes to one target group, /admin to another).
+•	You want host-based routing (e.g., app.example.com, admin.example.com).
+WE USE NLB When:
+•	You need extremely high performance and low latency.
+•	Layer 4 (Transport layer - TCP/UDP/TLS)
+•	We use NLB when the same time of conten
+
+
 23. What is ASG and how to setup
+Ans:-  An Auto Scaling Group (ASG) is an AWS service that automatically launches or terminates EC2 instances based on your desired conditions like traffic load, CPU usage, or a fixed schedule.
+
 24. What is the use case of SSM
 Ans:- AWS system manager is service that’s helps you to manage , control and automate your server (ec2 and on-prem) from one place.
 Main feature of AWS system manager:
@@ -196,13 +251,15 @@ Ans: ACM stands for AWS Certificate Manager.
 It is a managed service that helps you provision, manage, and deploy SSL/TLS certificates easily and securely on AWS services.
 
 26. What is SSL Certificate.
+Ans:- SSL Certificate stands for Secure Sockets Layer Certificate.
+It is a digital certificate .An SSL certificate is like a digital passport for a website that enables secure, encrypted communication over the internet.
 27. How to renew the SSL Certificate 
 28. Suppose if two servers are supporting one application how will you patch those servers without down the application 
 
 29. What is 3/3 Checks on VM
 Ans:- When we create a instance AWS perform two health checkup by using cloudwatch matrices
 vii.	System status check : AWS backend virtual infra means it will check the hardware side .
-viii.	Instance status check (os level helth check): Here AWS will check the connectivity grom hypervisor to instance
+viii.	Instance status check (os level helth check): Here AWS will check the connectivity from hypervisor to instance
 ix.	Application Health check: This is a user-defined health check (common in Auto Scaling Groups, ELB, or monitoring tools) to verify whether the application running on the VM is healthy. 
 
 30. Difference between SG nd NACL and what is the usecase
@@ -219,6 +276,7 @@ Ans:- SG:
 Ans:- Route Table define how traffic will route within the vpc or outside the the vpc.
          A route table contains a set of rules, called routes that are used to determine where network traffic is directed.
 
+32. For which purpose you are using S3
 Ans:- 1. Data Backup and Restore
 •	Storing backups of servers, databases, and applications.
 •	Disaster recovery planning.
@@ -276,3 +334,6 @@ Then inform to those users who execute the process
 If those users not present or responding then we have to change the priority of the process by the by the command renice
 renice -n 10 PID 
 41. How to troubleshoot if the memory utilization is full ?
+Ans:- 1. First check which process and who execute that process id consuming more memory by the command #top
+2.Try to kill or disable or stop the unnecessary services
+3.If all these are not possible then we have to increase the memory
